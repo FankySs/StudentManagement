@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentManagement.Shared.DTOs
+namespace StudentManagement.Shared.Auth
 {
     public class LoginRequestDto
     {

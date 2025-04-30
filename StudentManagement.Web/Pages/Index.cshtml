@@ -1,10 +1,52 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Vítejte";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="welcome-container">
+    <h1>Vítejte v systému StudentManagement</h1>
+    <p>Pro pokračování se prosím přihlaste jako administrátor nebo učitel.</p>
+
+    <a class="btn-login" asp-page="/Auth/Login">Přihlásit se</a>
 </div>
+
+<style>
+    .welcome-container {
+        max-width: 700px;
+        margin: 120px auto;
+        text-align: center;
+        font-family: "Segoe UI", sans-serif;
+        padding: 30px;
+        background-color: #f9f9f9;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+        .welcome-container h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .welcome-container p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+    .btn-login {
+        display: inline-block;
+        background-color: #007bff;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 1em;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-login:hover {
+            background-color: #0056b3;
+        }
+</style>

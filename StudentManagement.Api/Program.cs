@@ -1,4 +1,8 @@
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using StudentManagement.Api.Data;
 using StudentManagement.Api.Services.Auth;
+using StudentManagement.Api.Services.Database;
 
 namespace StudentManagement.Api
 {
@@ -15,10 +19,18 @@ namespace StudentManagement.Api
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            // JWT Authentication
+            // Vlastní služby (JWT + DbContext)
             builder.Services.AddJwtAuthentication(builder.Configuration);
+            builder.Services.AddAppDbContext(builder.Configuration);
 
             var app = builder.Build();
+
+            // Seeder dat (admin úèet atd.)
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<SchoolDbContext>();
+                DbSeeder.Seed(db, builder.Configuration); // ?? pøedáváme konfiguraci
+            }
 
             // Middleware pipeline
             if (app.Environment.IsDevelopment())
