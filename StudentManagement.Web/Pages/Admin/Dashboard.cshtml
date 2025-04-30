@@ -1,0 +1,95 @@
+﻿@page
+@model StudentManagement.Web.Pages.Admin.DashboardModel
+@{
+    ViewData["Title"] = "Administrace";
+}
+
+<div class="admin-container">
+    <h2>Administrace</h2>
+
+    @if (!string.IsNullOrEmpty(Model.StatusMessage))
+    {
+        <div class="alert alert-info text-center">@Model.StatusMessage</div>
+    }
+
+    <form method="post" asp-page-handler="Seed">
+        <button type="submit" class="btn-admin primary">Naplnit databázi testovacími daty</button>
+    </form>
+
+    <form method="post" asp-page-handler="Clear">
+        <button type="submit" class="btn-admin danger">Vymazat databázi</button>
+    </form>
+
+    <form method="get" asp-page="AddUser">
+        <button type="submit" class="btn-admin secondary">Přidat uživatele</button>
+    </form>
+
+    <form method="post" asp-page-handler="Logout">
+        <button type="submit" class="btn-admin outline">Odhlásit se</button>
+    </form>
+</div>
+
+<style>
+    .admin-container {
+        max-width: 500px;
+        margin: 120px auto;
+        background-color: #f9f9f9;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        font-family: "Segoe UI", sans-serif;
+    }
+
+        .admin-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+    .btn-admin {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        font-size: 1em;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        color: white;
+    }
+
+        .btn-admin.primary {
+            background-color: #007bff;
+        }
+
+            .btn-admin.primary:hover {
+                background-color: #0056b3;
+            }
+
+        .btn-admin.danger {
+            background-color: #dc3545;
+        }
+
+            .btn-admin.danger:hover {
+                background-color: #a71d2a;
+            }
+
+        .btn-admin.secondary {
+            background-color: #6c757d;
+        }
+
+            .btn-admin.secondary:hover {
+                background-color: #545b62;
+            }
+
+        .btn-admin.outline {
+            background-color: transparent;
+            border: 2px solid #343a40;
+            color: #343a40;
+        }
+
+            .btn-admin.outline:hover {
+                background-color: #343a40;
+                color: white;
+            }
+</style>

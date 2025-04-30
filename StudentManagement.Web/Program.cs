@@ -6,16 +6,29 @@ namespace StudentManagement.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Add Razor Pages
             builder.Services.AddRazorPages();
+
+            // Add Session (musí být pøed builder.Build())
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(60);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            // Add HttpClient pro komunikaci s API
+            builder.Services.AddHttpClient("api", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7158/");
+            });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            // Middleware pipeline
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -23,6 +36,8 @@ namespace StudentManagement.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession(); // musí být tady, aby session fungovala
 
             app.UseAuthorization();
 

@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentManagement.Api.Models;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 
 namespace StudentManagement.Api.Data
 {
@@ -21,9 +19,47 @@ namespace StudentManagement.Api.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            // Unikátní přihlašovací jméno
             modelBuilder.Entity<Uzivatel>()
                 .HasIndex(u => u.UzivatelskeJmeno)
                 .IsUnique();
+
+            // Oprava vztahu Znamka -> Student
+            modelBuilder.Entity<Znamka>()
+                .HasOne(z => z.Student)
+                .WithMany()
+                .HasForeignKey(z => z.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Oprava vztahu Znamka -> Predmet
+            modelBuilder.Entity<Znamka>()
+                .HasOne(z => z.Predmet)
+                .WithMany()
+                .HasForeignKey(z => z.PredmetId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Student -> Trida
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.Trida)
+                .WithMany()
+                .HasForeignKey(s => s.TridaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Student -> Rocnik
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.Rocnik)
+                .WithMany()
+                .HasForeignKey(s => s.RocnikId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Predmet -> Rocnik
+            modelBuilder.Entity<Predmet>()
+                .HasOne(p => p.Rocnik)
+                .WithMany()
+                .HasForeignKey(p => p.RocnikId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
