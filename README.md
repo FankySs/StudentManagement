@@ -28,7 +28,6 @@ Solution: StudentManagement.sln
      * Repositories (Data Access) – Entity Framework Core, `DbContext` s `DbSet<Student>`, `DbSet<Course>`, `DbSet<Grade>`.
      * Shared Interfaces – závisí na rozhraních z Shared projektu.
    * **Bezpečnost**: JWT autentizace + autorizace.
-   * **Dokumentace**: Swagger / OpenAPI (přes Swashbuckle.AspNetCore).
    * **Konfigurace**: `appsettings.json` + proměnné prostředí (DB, JWT klíče).
 
 3. **Webová vrstva (StudentManagement.Web)**
@@ -36,7 +35,7 @@ Solution: StudentManagement.sln
    * **Razor Pages**: Frontální UI s překrytím těch nejčastějších stránek: `Index`, `Students`, `Courses`, `Grades`.
    * **Volání API**: `HttpClient` nastavený na base URL API, serializace JSON pomocí `System.Text.Json`.
    * **Validace**: jQuery Validation + Unobtrusive pro client-side checks.
-   * **Styling**: základní CSS + Bootstrap (volitelné).
+   * **Styling**: základní CSS + Bootstrap.
 
 4. **Databázová vrstva**
 
