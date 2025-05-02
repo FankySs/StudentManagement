@@ -1,6 +1,6 @@
 # StudentManagement
 
-Víceprojektová .NET 8 aplikace pro kompletní správu studentů, předmětů, známek a výuky.
+Víceprojektová .NET 8 aplikace pro správu studentů, předmětů, známek a výuky. Vytvořeno podle zadání z VUT-FEKT BPC-OOP.
 
 ## 🏗️ Architektura řešení
 
