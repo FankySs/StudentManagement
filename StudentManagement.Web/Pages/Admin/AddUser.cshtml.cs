@@ -24,7 +24,7 @@ namespace StudentManagement.Web.Pages.Admin
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var token = HttpContext.Session.GetString("token");
+            var token = HttpContext.Session.GetString("Token");
 
             if (string.IsNullOrEmpty(token))
                 return RedirectToPage("/Auth/Login");

@@ -1,0 +1,99 @@
+﻿@page "{id:int}"
+@model StudentManagement.Web.Pages.User.StudentDetailModel
+@{
+    ViewData["Title"] = "Detail studenta";
+}
+
+<div class="student-detail-container">
+    <h2>Detail studenta</h2>
+    <div class="text-end mb-3">
+        <a asp-page="/User/Overview" class="btn btn-outline-secondary">Zpět na přehled studentů</a>
+    </div>
+
+    @if (Model.Student != null)
+    {
+        <div class="student-info">
+            <p><strong>Jméno:</strong> @Model.Student.Jmeno</p>
+            <p><strong>Příjmení:</strong> @Model.Student.Prijmeni</p>
+            <p><strong>Datum narození:</strong> @Model.Student.DatumNarozeni.ToString("dd.MM.yyyy")</p>
+            <p><strong>Ročník:</strong> @Model.Student.Rocnik</p>
+        </div>
+
+        @if (Model.ZnamkyPoPredmetech.Any())
+        {
+            <table class="table table-bordered mt-4">
+                <thead class="table-light">
+                    <tr>
+                        <th>Název předmětu</th>
+                        <th>Průměr</th>
+                        @for (int i = 1; i <= 10; i++)
+                        {
+                            <th>Známka @i</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var kvp in Model.ZnamkyPoPredmetech)
+                    {
+                        var predmet = kvp.Key;
+                        var hodnoty = kvp.Value;
+                        var znamky = hodnoty.Where(x => x.HasValue).Select(x => x.Value);
+                        <tr>
+                            <td>@predmet</td>
+                            <td>
+                                @(znamky.Any() ? znamky.Average().ToString("0.00") : "–")
+                            </td>
+                            @for (int idx = 0; idx < hodnoty.Length; idx++)
+                            {
+                                <td>@(hodnoty[idx]?.ToString() ?? "–")</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Student nemá žádné známky.</p>
+        }
+    }
+    else
+    {
+        <p>Student nebyl nalezen.</p>
+    }
+</div>
+
+@section Styles {
+    <style>
+        .student-detail-container {
+            max-width: 1000px;
+            margin: 80px auto;
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            font-family: "Segoe UI", sans-serif;
+        }
+
+            .student-detail-container h2 {
+                text-align: center;
+                margin-bottom: 30px;
+                color: #333;
+            }
+
+        .student-info {
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+            .student-info p {
+                margin: 5px 0;
+            }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+    </style>
+}

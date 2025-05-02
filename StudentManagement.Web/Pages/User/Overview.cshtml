@@ -1,0 +1,93 @@
+﻿@page
+@model StudentManagement.Web.Pages.User.OverviewModel
+@{
+    ViewData["Title"] = "Přehled studentů";
+}
+
+<div class="admin-container">
+    <h2>Přehled studentů</h2>
+
+    <div class="text-end mb-3">
+        <a asp-page="/User/Dashboard" class="btn btn-outline-secondary">Zpět do menu</a>
+    </div>
+
+    <form method="get">
+        <div class="mb-3">
+            <label for="gradeSelect" class="form-label">Zvolte ročník:</label>
+            <select asp-for="SelectedGradeId" asp-items="Model.RocnikySelectList" id="gradeSelect" class="form-select" onchange="this.form.submit()">
+                <option value="">-- Vyberte ročník --</option>
+            </select>
+        </div>
+    </form>
+
+    @if (Model.Students.Any())
+    {
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Jméno</th>
+                    <th>Příjmení</th>
+                    <th>Průměr</th>
+                    <th>Datum narození</th>
+                    <th>Ročník</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model.Students)
+                {
+                    <tr>
+                        <td><a asp-page="/User/StudentDetail" asp-route-id="@student.Id">@student.Jmeno</a></td>
+                        <td>@student.Prijmeni</td>
+                        <td>
+                            @(student.Znamky.Any() ? student.Znamky.Average(z => z.Hodnota).ToString("0.00") : "–")
+                        </td>
+                        <td>@student.DatumNarozeni.ToString("dd.MM.yyyy")</td>
+                        <td>@student.Rocnik</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else if (Model.SelectedGradeId > 0)
+    {
+        <p>Pro vybraný ročník nebyli nalezeni žádní studenti.</p>
+    }
+</div>
+
+@section Styles {
+    <style>
+        .admin-container {
+            max-width: 900px;
+            margin: 80px auto;
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            font-family: "Segoe UI", sans-serif;
+        }
+
+            .admin-container h2 {
+                text-align: center;
+                margin-bottom: 30px;
+                color: #333;
+            }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .table {
+            margin-top: 20px;
+        }
+
+            .table th, .table td {
+                vertical-align: middle;
+                text-align: center;
+            }
+
+        .form-select {
+            max-width: 300px;
+        }
+    </style>
+}

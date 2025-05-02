@@ -1,0 +1,121 @@
+﻿@page
+@model StudentManagement.Web.Pages.User.GradesModel
+@{
+    ViewData["Title"] = "Zapsat známky";
+}
+
+<div class="grades-container">
+    <h2>Zapsat známky</h2>
+
+    <div class="text-end mb-3">
+        <a asp-page="/User/Dashboard" class="btn btn-outline-secondary">Zpět do menu</a>
+    </div>
+
+    @if (!string.IsNullOrEmpty(TempData["StatusMessage"]?.ToString()))
+    {
+        <div class="alert alert-info">
+            @TempData["StatusMessage"]
+        </div>
+    }
+
+    <form method="get" class="mb-4">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label asp-for="SelectedGradeId" class="form-label">Vyberte ročník:</label>
+                <select asp-for="SelectedGradeId" asp-items="Model.GradesSelectList" class="form-select" onchange="this.form.submit()">
+                    <option value="">-- Vyberte ročník --</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="SelectedSubjectId" class="form-label">Vyberte předmět:</label>
+                <select asp-for="SelectedSubjectId" asp-items="Model.SubjectsSelectList" class="form-select" onchange="this.form.submit()">
+                    <option value="">-- Vyberte předmět --</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    @if (Model.StudentGrades.Any())
+    {
+        <form method="post">
+            <input type="hidden" asp-for="SelectedGradeId" />
+            <input type="hidden" asp-for="SelectedSubjectId" />
+
+            <table class="table table-bordered mt-4">
+                <thead class="table-light">
+                    <tr>
+                        <th>Jméno</th>
+                        <th>Příjmení</th>
+                        @for (int j = 0; j < 10; j++)
+                        {
+                            <th>Známka @(j + 1)</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.StudentGrades.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Model.StudentGrades[i].Jmeno
+                                <input type="hidden" asp-for="StudentGrades[@i].StudentId" />
+                                <input type="hidden" asp-for="StudentGrades[@i].Jmeno" />
+                                <input type="hidden" asp-for="StudentGrades[@i].Prijmeni" />
+                            </td>
+                            <td>@Model.StudentGrades[i].Prijmeni</td>
+                            @for (int j = 0; j < 10; j++)
+                            {
+                                <td>
+                                    <input asp-for="StudentGrades[@i].Znamky[@j]" class="form-control text-center" type="number" min="1" max="5" />
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary">Uložit známky</button>
+            </div>
+        </form>
+    }
+    else if (Model.SelectedGradeId > 0 && Model.SelectedSubjectId > 0)
+    {
+        <p class="mt-4">Pro vybraný ročník a předmět nejsou dostupní žádní studenti.</p>
+    }
+</div>
+
+@section Styles {
+    <style>
+        .grades-container {
+            max-width: 1000px;
+            margin: 80px auto;
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            font-family: "Segoe UI", sans-serif;
+        }
+
+            .grades-container h2 {
+                text-align: center;
+                margin-bottom: 30px;
+                color: #333;
+            }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .form-control {
+            max-width: 80px;
+            margin: 0 auto;
+        }
+    </style>
+}

@@ -11,7 +11,6 @@ namespace StudentManagement.Api.Data
         }
 
         public DbSet<Student> Studenti { get; set; }
-        public DbSet<Trida> Tridy { get; set; }
         public DbSet<Rocnik> Rocniky { get; set; }
         public DbSet<Predmet> Predmety { get; set; }
         public DbSet<Znamka> Znamky { get; set; }
@@ -26,25 +25,18 @@ namespace StudentManagement.Api.Data
                 .HasIndex(u => u.UzivatelskeJmeno)
                 .IsUnique();
 
-            // Oprava vztahu Znamka -> Student
+            // Znamka -> Student
             modelBuilder.Entity<Znamka>()
                 .HasOne(z => z.Student)
-                .WithMany()
+                .WithMany(s => s.Znamky)
                 .HasForeignKey(z => z.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Oprava vztahu Znamka -> Predmet
+            // Znamka -> Predmet
             modelBuilder.Entity<Znamka>()
                 .HasOne(z => z.Predmet)
-                .WithMany()
+                .WithMany(p => p.Znamky)
                 .HasForeignKey(z => z.PredmetId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Student -> Trida
-            modelBuilder.Entity<Student>()
-                .HasOne(s => s.Trida)
-                .WithMany()
-                .HasForeignKey(s => s.TridaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Student -> Rocnik
@@ -61,5 +53,6 @@ namespace StudentManagement.Api.Data
                 .HasForeignKey(p => p.RocnikId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
+
     }
 }

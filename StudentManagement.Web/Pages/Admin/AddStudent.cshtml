@@ -1,11 +1,11 @@
 ﻿@page
-@model StudentManagement.Web.Pages.Admin.AddUserModel
+@model StudentManagement.Web.Pages.Admin.AddStudentModel
 @{
-    ViewData["Title"] = "Přidat uživatele";
+    ViewData["Title"] = "Přidat studenta";
 }
 
 <div class="login-container">
-    <h2>Přidat nového uživatele</h2>
+    <h2>Přidat nového studenta</h2>
 
     <div class="text-end mb-3">
         <a asp-page="/Admin/Dashboard" class="btn btn-outline-secondary">Zpět do menu</a>
@@ -13,24 +13,34 @@
 
     <form method="post">
         <div class="form-group">
-            <label>Uživatelské jméno</label>
-            <input asp-for="NovyUzivatel.UzivatelskeJmeno" class="form-control" />
+            <label>Jméno</label>
+            <input asp-for="NewStudent.Jmeno" class="form-control" />
         </div>
 
         <div class="form-group">
-            <label>Heslo</label>
-            <input asp-for="NovyUzivatel.Heslo" type="password" class="form-control" />
+            <label>Příjmení</label>
+            <input asp-for="NewStudent.Prijmeni" class="form-control" />
         </div>
 
         <div class="form-group">
-            <label>Role</label>
-            <select asp-for="NovyUzivatel.Role" class="form-control">
-                <option value="Ucitel">Ucitel</option>
-                <option value="Admin">Admin</option>
+            <label>Datum narození</label>
+            <input asp-for="NewStudent.DatumNarozeni" type="date" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Ročník</label>
+            <select asp-for="NewStudent.RocnikId" asp-items="Model.GradesSelectList" class="form-control">
+                <option value="">-- Vyberte ročník --</option>
             </select>
         </div>
 
-        <button type="submit" class="btn-login">Vytvořit uživatele</button>
+        <div class="form-group">
+            <label>Předměty (podržte Ctrl pro výběr více)</label>
+            <select asp-for="NewStudent.ZvolenePredmety" asp-items="@(new MultiSelectList(Model.AvailableSubjects, "Id", "Nazev"))" class="form-control" multiple size="6">
+            </select>
+        </div>
+
+        <button type="submit" class="btn-login">Vytvořit studenta</button>
 
         @if (!string.IsNullOrEmpty(Model.StatusMessage))
         {

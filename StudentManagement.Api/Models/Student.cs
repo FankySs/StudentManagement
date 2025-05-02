@@ -7,9 +7,6 @@
         public string Prijmeni { get; set; }
         public DateTime DatumNarozeni { get; set; }
 
-        public int TridaId { get; set; }
-        public Trida Trida { get; set; }
-
         public int RocnikId { get; set; }
         public Rocnik Rocnik { get; set; }
 

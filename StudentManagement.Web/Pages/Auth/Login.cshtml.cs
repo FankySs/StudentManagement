@@ -42,7 +42,7 @@ namespace StudentManagement.Web.Pages.Auth
             return loginResult.Role switch
             {
                 "Admin" => RedirectToPage("/Admin/Dashboard"),
-                "Ucitel" => RedirectToPage("/Ucitel/Dashboard"),
+                "Ucitel" => RedirectToPage("/User/Dashboard"),
                 _ => RedirectToPage("/Error")
             };
         }

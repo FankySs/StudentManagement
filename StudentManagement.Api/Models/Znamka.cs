@@ -12,7 +12,6 @@
         public int PredmetId { get; set; }
         public Predmet Predmet { get; set; }
 
-        public int UcitelId { get; set; }
-        public Uzivatel Ucitel { get; set; }
+        public int Poradi { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace StudentManagement.Api
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<SchoolDbContext>();
-                DbSeeder.Seed(db, builder.Configuration); // ?? pøedáváme konfiguraci
+                DbSeeder.Seed(db, builder.Configuration);
             }
 
             // Middleware pipeline

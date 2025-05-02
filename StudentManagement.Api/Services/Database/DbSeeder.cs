@@ -7,9 +7,9 @@ namespace StudentManagement.Api.Services.Database
     {
         public static void Seed(SchoolDbContext context, IConfiguration config)
         {
-            context.Database.EnsureDeleted(); // smaže databázi
-            context.Database.EnsureCreated(); // znovu vytvoří podle modelů
-
+            //context.Database.EnsureDeleted(); 
+            //use for deleting DB
+            context.Database.EnsureCreated();
 
             if (!context.Uzivatele.Any(u => u.Role == "Admin"))
             {

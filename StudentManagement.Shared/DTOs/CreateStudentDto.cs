@@ -1,16 +1,11 @@
 ﻿namespace StudentManagement.Shared.DTOs
 {
-    public class StudentDto
+    public class StudentCreateDto
     {
-        public int Id { get; set; }
         public string Jmeno { get; set; }
         public string Prijmeni { get; set; }
         public DateTime DatumNarozeni { get; set; }
-
-        public int TridaId { get; set; }
         public int RocnikId { get; set; }
-        public int Rocnik { get; set; }    
-
-        public List<ZnamkaDto> Znamky { get; set; } = new();
+        public List<int> ZvolenePredmety { get; set; } = new();
     }
 }
